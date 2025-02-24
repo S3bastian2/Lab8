@@ -1,29 +1,34 @@
 class nodoDoble:
-    def __init__(self, data, left, right):
+    def __init__(self, data, left = None , right = None, parent = None):
         self.__data = data
         self.__left = left
         self.__right = right
-        
-    def nodoDoble(self):
-        self.__init__(None, None, None)
-    
-    def nodoDoble(self, d):
-        self.__init__(d, None, None)
+        self.__parent = parent
         
     def setData(self, d):
         self.__data = d
     
-    def setLeft(self, n):
-        self.__left = n 
+    def setParent(self, p):
+        self.__parent = p
     
-    def setRight(self, p):
-        self.__right = p
+    def setLeft(self, l):
+        self.__left = l
+        if l != None:
+            l.setParent(self)
+    
+    def setRight(self, r):
+        self.__right = r
+        if r != None:
+            r.setParent(self)
+    
+    def getParent(self):
+        return self.__parent
         
     def getData(self):
         return self.__data
     
-    def getNext(self):
+    def getLeft(self):
         return self.__left
     
-    def getPrev(self):
+    def getRight(self):
         return self.__right
