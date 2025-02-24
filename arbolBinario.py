@@ -37,26 +37,38 @@ class arbolBinario():
         return v.getRight()
     
     def parent(self, v):
-        if self.isEmpty(v):
-            return v == None
-        elif self.isRoot(v):
-            return v == None
+        if v is None or self.isRoot(v):
+            return None
         else:
             return v.getParent()
     
     def addRoot(self, e):
-        self.__root = nodoDoble(e)
-        self.__size = 1
+        if isinstance(e, nodoDoble):
+            self.__root = e
+        else:
+            self.__root = nodoDoble(e)
+        self.__size += 1
+        return self.__root
     
     def insertLeft(self, v, e):
-        left = nodoDoble(e)
-        v.setLeft(left)
-        self.__size += 1
+        if v.getLeft() is None:
+            nuevoNodo = nodoDoble(e)
+            v.setLeft(nuevoNodo)
+            nuevoNodo.setParent(v)
+            self.__size += 1
+            return nuevoNodo
+        else:
+            raise Exception("El nodo ya tiene un hijo izquierdo.")
     
     def insertRight(self, v, e):
-        right = nodoDoble(e)
-        v.setRight(right)
-        self.__size += 1
+        if v.getRight() is None:
+            nuevoNodo = nodoDoble(e)
+            v.setRight(nuevoNodo)
+            nuevoNodo.setParent(v)
+            self.__size += 1
+            return nuevoNodo
+        else:
+            raise Exception("Este ya tenia un nodo derecho.")
     
     def remove(self, v):
         p = self.parent(v)
@@ -65,10 +77,12 @@ class arbolBinario():
                 child = self.left(v)
             else:
                 child = self.right(v)
+            
             if self.left(p) == v:
-                p.setLeft(v)
+                p.setLeft(child)
             else:
-                p.setRight(v)
+                p.setRight(child)
+            child.setParent(p)
             v.setLeft(None)
             v.setRight(None)
         else:
@@ -77,9 +91,3 @@ class arbolBinario():
             else:
                 p.setRight(None)
         self.__size -= 1
-
-
-
-
-
-        
